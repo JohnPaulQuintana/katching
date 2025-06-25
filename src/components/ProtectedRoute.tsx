@@ -1,3 +1,4 @@
+import React, { type JSX } from "react"; // ← add this line
 import { Navigate } from "react-router-dom";
 import { isAuthenticated } from "../auth";
 

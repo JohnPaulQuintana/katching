@@ -19,8 +19,6 @@ import {
   faRightFromBracket,
   faChartPie,
   faReceipt,
-  faBullseye,
-  faCircle,
 } from "@fortawesome/free-solid-svg-icons";
 import { motion, AnimatePresence } from "framer-motion";
 
