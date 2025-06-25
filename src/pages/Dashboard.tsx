@@ -156,7 +156,7 @@ const Dashboard = () => {
       const res = await axios.put(
         "https://katching-backend.vercel.app/api/goals/",
         { target_amount: parseFloat(goalInput) },
-        { headers: { Authorization: `Bearer ${getToken()}` } }
+        { headers: { Authorization: `Bearer ${getToken()}`,"Content-Type": "application/json", } }
       );
       setGoal(res.data.target_amount);
       setEditingGoal(false);
