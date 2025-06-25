@@ -154,7 +154,7 @@ const Dashboard = () => {
   const handleUpdateGoal = async () => {
     try {
       const res = await axios.put(
-        "https://katching-backend.vercel.app/api/goals",
+        "https://katching-backend.vercel.app/api/goals/",
         { target_amount: parseFloat(goalInput) },
         { headers: { Authorization: `Bearer ${getToken()}` } }
       );
