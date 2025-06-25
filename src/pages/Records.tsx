@@ -26,7 +26,7 @@ const Records = () => {
 
   useEffect(() => {
     const fetchRecords = async () => {
-      const res = await axios.get("http://192.168.100.173:8000/api/savings", {
+      const res = await axios.get("https://katching-backend.vercel.app/api/savings", {
         headers: { Authorization: `Bearer ${getToken()}` },
       });
       setRecords(res.data);
@@ -36,11 +36,11 @@ const Records = () => {
 
   const confirmDelete = async () => {
     if (!recordToDelete) return;
-    await axios.delete(`http://192.168.100.173:8000/api/savings/${recordToDelete.id}`, {
+    await axios.delete(`https://katching-backend.vercel.app/api/savings/${recordToDelete.id}`, {
       headers: { Authorization: `Bearer ${getToken()}` },
     });
     setRecordToDelete(null);
-    const res = await axios.get("http://192.168.100.173:8000/api/savings", {
+    const res = await axios.get("https://katching-backend.vercel.app/api/savings", {
       headers: { Authorization: `Bearer ${getToken()}` },
     });
     setRecords(res.data);

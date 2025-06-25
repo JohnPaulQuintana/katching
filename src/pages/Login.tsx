@@ -16,7 +16,7 @@ const Login = () => {
     e.preventDefault();
     try {
       const data = qs.stringify({ username, password });
-      const res = await axios.post("http://192.168.100.173:8000/api/auth/login", data, {
+      const res = await axios.post("https://katching-backend.vercel.app/api/auth/login", data, {
         headers: { "Content-Type": "application/x-www-form-urlencoded" },
       });
       setToken(res.data.access_token);

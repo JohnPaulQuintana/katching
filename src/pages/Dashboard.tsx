@@ -55,8 +55,8 @@ const Dashboard = () => {
     const headers = { Authorization: `Bearer ${getToken()}` };
     try {
       const [savingsRes, goalRes] = await Promise.all([
-        axios.get("http://192.168.100.173:8000/api/savings", { headers }),
-        axios.get("http://192.168.100.173:8000/api/goals", { headers }),
+        axios.get("https://katching-backend.vercel.app/api/savings", { headers }),
+        axios.get("https://katching-backend.vercel.app/api/goals", { headers }),
       ]);
       setRecords(savingsRes.data);
       setGoal(goalRes.data.target_amount);
@@ -134,7 +134,7 @@ const Dashboard = () => {
     setLoading(true);
     try {
       const res = await axios.post(
-        "http://192.168.100.173:8000/api/savings",
+        "https://katching-backend.vercel.app/api/savings",
         { amount: parseFloat(amount) },
         { headers: { Authorization: `Bearer ${getToken()}` } }
       );
@@ -154,7 +154,7 @@ const Dashboard = () => {
   const handleUpdateGoal = async () => {
     try {
       const res = await axios.put(
-        "http://192.168.100.173:8000/api/goals",
+        "https://katching-backend.vercel.app/api/goals",
         { target_amount: parseFloat(goalInput) },
         { headers: { Authorization: `Bearer ${getToken()}` } }
       );
