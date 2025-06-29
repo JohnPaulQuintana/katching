@@ -598,7 +598,7 @@ const Dashboard = () => {
           }`}
         >
           <FontAwesomeIcon icon={faWallet} className="text-xl" />
-          <span className="text-xs">Savings</span>
+          <span className="text-xs">Budget</span>
         </button>
         {/* 
   <button
