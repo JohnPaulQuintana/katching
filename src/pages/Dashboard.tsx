@@ -19,7 +19,7 @@ import {
   faRightFromBracket,
   faChartPie,
   faReceipt,
-  faPiggyBank,
+  faWallet,
 } from "@fortawesome/free-solid-svg-icons";
 import { motion, AnimatePresence } from "framer-motion";
 
@@ -597,7 +597,7 @@ const Dashboard = () => {
               : "text-gray-500 hover:text-indigo-500"
           }`}
         >
-          <FontAwesomeIcon icon={faPiggyBank} className="text-xl" />
+          <FontAwesomeIcon icon={faWallet} className="text-xl" />
           <span className="text-xs">Savings</span>
         </button>
         {/* 
