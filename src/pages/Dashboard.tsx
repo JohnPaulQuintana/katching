@@ -589,7 +589,7 @@ const Dashboard = () => {
           <span className="text-xs">Records</span>
         </button>
 
-        <button
+        {/* <button
           onClick={() => navigate("/esaves")}
           className={`flex flex-col items-center gap-0.5 transition transform hover:scale-105 ${
             location.pathname === "/esaves"
@@ -599,7 +599,7 @@ const Dashboard = () => {
         >
           <FontAwesomeIcon icon={faPiggyBank} className="text-xl" />
           <span className="text-xs">Savings</span>
-        </button>
+        </button> */}
         {/* 
   <button
     onClick={() => navigate("/goal")}
