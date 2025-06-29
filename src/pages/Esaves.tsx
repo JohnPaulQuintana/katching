@@ -113,13 +113,13 @@ function Esaves() {
     alert("Expense saved successfully!");
   };
 
-  const handleDelete = async (id: number) => {
-    if (confirm("Are you sure you want to delete this expense?")) {
-      await axios.delete(`${API}/expenses/${id}`);
-      loadExpenses();
-      loadInsights();
-    }
-  };
+  // const handleDelete = async (id: number) => {
+  //   if (confirm("Are you sure you want to delete this expense?")) {
+  //     await axios.delete(`${API}/expenses/${id}`);
+  //     loadExpenses();
+  //     loadInsights();
+  //   }
+  // };
 
   const renderDashboard = () => {
     if (!insights)
