@@ -61,19 +61,23 @@ function Esaves() {
   const [insights, setInsights] = useState<Insights | null>(null);
   const [searchTerm, setSearchTerm] = useState<string>("");
 
-  const [form, setForm] = useState<{ amount: string; category: string; note: string }>({ amount: "", category: "", note: "" });
+  const [form, setForm] = useState<{
+    amount: string;
+    category: string;
+    note: string;
+  }>({ amount: "", category: "", note: "" });
   const [budget, setBudget] = useState<string>("");
 
   const loadExpenses = async () => {
     const res = await axios.get<Expense[]>(`${API}/expenses`, {
-       headers: { Authorization: `Bearer ${getToken()}` },
+      headers: { Authorization: `Bearer ${getToken()}` },
     });
     setExpenses(res.data);
   };
 
   const loadInsights = async () => {
     const [insightsRes, budgetRes] = await Promise.all([
-      axios.get<Insights>(`${API}/insights`,{
+      axios.get<Insights>(`${API}/insights`, {
         headers: { Authorization: `Bearer ${getToken()}` },
       }),
       axios.get<{ budget: number }>(`${API}/budget`, {
@@ -141,7 +145,8 @@ function Esaves() {
       100,
       Number(
         (
-          (insights.total_spent / (insights.total_spent + insights.budget_left)) *
+          (insights.total_spent /
+            (insights.total_spent + insights.budget_left)) *
           100
         ).toFixed(0)
       )
@@ -563,7 +568,7 @@ function Esaves() {
         <div className="w-6" /> {/* spacer */}
       </header>
 
-      <main>
+      <main className="mb-28">
         {page === "dashboard" && renderDashboard()}
         {page === "expenses" && renderExpenses()}
         {page === "system" && renderSystemDetails()}
@@ -571,11 +576,39 @@ function Esaves() {
 
       {/* Footer */}
       <footer className="bg-white border-t text-center py-3 text-xs text-gray-400 fixed bottom-0 w-full z-10">
+        <div className="flex justify-around py-4 z-50">
+          <button
+            className={`text-center ${
+              page === "dashboard"
+                ? "text-green-600 font-bold"
+                : "text-gray-500"
+            }`}
+            onClick={() => setPage("dashboard")}
+          >
+            📊<div className="text-xs mt-1">Dashboard</div>
+          </button>
+          <button
+          className={`text-center ${
+            page === "expenses" ? "text-green-600 font-bold" : "text-gray-500"
+          }`}
+          onClick={() => setPage("expenses")}
+        >
+          🧾<div className="text-xs mt-1">Expenses</div>
+        </button>
+        <button
+          className={`text-center ${
+            page === "system" ? "text-green-600 font-bold" : "text-gray-500"
+          }`}
+          onClick={() => setPage("system")}
+        >
+          📘<div className="text-xs mt-1">System</div>
+        </button>
+        </div>
         <span>© {new Date().getFullYear()} Kaching App — Version 1.0</span>
         <span className="block">Develop by: JP QUINTANA</span>
       </footer>
     </div>
   );
-};
+}
 
 export default Esaves;
