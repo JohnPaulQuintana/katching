@@ -1,7 +1,8 @@
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
-import qs from 'qs';
+import Swal from "sweetalert2";
+import qs from "qs";
 import { setToken, setName } from "../auth";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 
@@ -14,28 +15,53 @@ const Login = () => {
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
+
     try {
       const data = qs.stringify({ username, password });
-      const res = await axios.post("https://katching-backend.vercel.app/api/auth/login", data, {
-        headers: { "Content-Type": "application/x-www-form-urlencoded" },
-      });
+      const res = await axios.post(
+        "https://katching-backend.vercel.app/api/auth/login",
+        data,
+        {
+          headers: { "Content-Type": "application/x-www-form-urlencoded" },
+        }
+      );
+
       setToken(res.data.access_token);
-      setName(res.data.name)
-      navigate("/dashboard");
+      setName(res.data.name);
+
+      Swal.fire({
+        icon: "success",
+        title: "Login Successful",
+        text: `Welcome back, ${res.data.name}!`,
+        timer: 1500,
+        showConfirmButton: false,
+      });
+
+      setTimeout(() => navigate("/dashboard"), 1600); // navigate after alert
     } catch (err) {
+      Swal.fire({
+        icon: "error",
+        title: "Login Failed",
+        text: "Invalid credentials. Please try again.",
+      });
+
       setError("Invalid credentials");
     }
   };
 
   return (
-    <div className="min-h-screen p-4 flex items-center justify-center bg-gradient-to-br from-blue-100 to-indigo-200">
+    <div className="min-h-screen p-4 flex flex-col items-center justify-center bg-gradient-to-br from-blue-100 to-indigo-200">
       <form
         onSubmit={handleSubmit}
         className="bg-white shadow-xl rounded-lg p-8 w-full max-w-md space-y-6"
       >
-        <h1 className="text-indigo-600 text-6xl text-center"><FontAwesomeIcon icon="coins"/></h1>
+        <h1 className="text-indigo-600 text-6xl text-center">
+          <FontAwesomeIcon icon="coins" />
+        </h1>
 
-        <h2 className="text-2xl font-bold text-center uppercase text-gray-700">Welcome to Kaching</h2>
+        <h2 className="text-2xl font-bold text-center uppercase text-gray-700">
+          Welcome to Kaching
+        </h2>
         {error && <p className="text-red-500 text-sm text-center">{error}</p>}
 
         {/* Username Field */}
@@ -48,7 +74,7 @@ const Login = () => {
             type="text"
             placeholder="Username"
             value={username}
-            onChange={e => setUsername(e.target.value)}
+            onChange={(e) => setUsername(e.target.value)}
             className="w-full pl-10 pr-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-400"
             required
           />
@@ -64,7 +90,7 @@ const Login = () => {
             type={showPassword ? "text" : "password"}
             placeholder="Password"
             value={password}
-            onChange={e => setPassword(e.target.value)}
+            onChange={(e) => setPassword(e.target.value)}
             className="w-full pl-10 pr-10 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-400"
             required
           />
@@ -85,6 +111,12 @@ const Login = () => {
         >
           Login
         </button>
+        <div>
+          <p className="text-xs items-center justify-center flex gap-2 text-gray-500 font-bold">
+            <span>DEVELOPED BY:</span>
+            <span>JOHN PAUL QUINTANA</span>
+          </p>
+        </div>
       </form>
     </div>
   );

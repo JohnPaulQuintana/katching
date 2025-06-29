@@ -1,6 +1,8 @@
 import { useState, useEffect } from "react";
 import type { FormEvent } from "react";
 import axios from "axios";
+import Swal from "sweetalert2";
+
 import { getToken } from "../auth";
 import { Line, Pie } from "react-chartjs-2";
 import {
@@ -102,15 +104,32 @@ function Esaves() {
 
   const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    await axios.post(`${API}/expenses`, {
-      ...form,
-      amount: parseFloat(form.amount),
-      date: new Date().toISOString().split("T")[0],
-    });
-    setForm({ amount: "", category: "", note: "" });
-    loadExpenses();
-    loadInsights();
-    alert("Expense saved successfully!");
+
+    try {
+      await axios.post(`${API}/expenses`, {
+        ...form,
+        amount: parseFloat(form.amount),
+        date: new Date().toISOString().split("T")[0],
+      });
+
+      setForm({ amount: "", category: "", note: "" });
+      loadExpenses();
+      loadInsights();
+
+      Swal.fire({
+        icon: "success",
+        title: "Expense Saved!",
+        text: "Your expense was added successfully.",
+        timer: 2000,
+        showConfirmButton: false,
+      });
+    } catch (error: any) {
+      Swal.fire({
+        icon: "error",
+        title: "Failed to Save Expense",
+        text: error?.response?.data?.detail || "Something went wrong.",
+      });
+    }
   };
 
   // const handleDelete = async (id: number) => {
@@ -212,7 +231,14 @@ function Esaves() {
               budget: parseFloat(budget),
             });
             loadInsights();
-            alert("Budget updated!");
+            // alert("Budget updated!");
+            Swal.fire({
+              icon: "success",
+              title: "Budget Updated!",
+              text: "Your budget was updated successfully.",
+              timer: 2000,
+              showConfirmButton: false,
+            });
           }}
           className="bg-white p-4 rounded-xl shadow space-y-3"
         >
@@ -366,7 +392,7 @@ function Esaves() {
     );
 
     return (
-      <div className="max-w-4xl mx-auto p-3 space-y-4 mt-4">
+      <div className="max-w-full px-2 py-8 space-y-5">
         <div className="bg-white shadow-md rounded-2xl p-6">
           <h2 className="text-2xl font-bold text-blue-900 flex items-center gap-2">
             🧾 Add Expense
@@ -457,7 +483,7 @@ function Esaves() {
   };
 
   const renderSystemDetails = () => (
-    <div className="max-w-3xl mx-auto p-3 space-y-6 text-gray-800 mt-6">
+    <div className="max-w-full px-2 py-8 space-y-5 text-gray-800">
       <h1 className="text-2xl font-bold text-blue-700">📘 System Overview</h1>
 
       <div className="bg-white/80 backdrop-blur p-6 rounded-3xl shadow-xl ring-1 ring-gray-200 space-y-6 text-sm">
@@ -565,7 +591,7 @@ function Esaves() {
         >
           <FontAwesomeIcon icon={faArrowLeft} /> Dashboard
         </button>
-        <h1 className="text-lg font-bold text-indigo-700">E-SAVING</h1>
+        <h1 className="text-lg font-bold text-indigo-700">E-Budget</h1>
         <div className="w-6" /> {/* spacer */}
       </header>
 
@@ -589,21 +615,21 @@ function Esaves() {
             📊<div className="text-xs mt-1">Dashboard</div>
           </button>
           <button
-          className={`text-center ${
-            page === "expenses" ? "text-green-600 font-bold" : "text-gray-500"
-          }`}
-          onClick={() => setPage("expenses")}
-        >
-          🧾<div className="text-xs mt-1">Expenses</div>
-        </button>
-        <button
-          className={`text-center ${
-            page === "system" ? "text-green-600 font-bold" : "text-gray-500"
-          }`}
-          onClick={() => setPage("system")}
-        >
-          📘<div className="text-xs mt-1">System</div>
-        </button>
+            className={`text-center ${
+              page === "expenses" ? "text-green-600 font-bold" : "text-gray-500"
+            }`}
+            onClick={() => setPage("expenses")}
+          >
+            🧾<div className="text-xs mt-1">Expenses</div>
+          </button>
+          <button
+            className={`text-center ${
+              page === "system" ? "text-green-600 font-bold" : "text-gray-500"
+            }`}
+            onClick={() => setPage("system")}
+          >
+            📘<div className="text-xs mt-1">System</div>
+          </button>
         </div>
         <span>© {new Date().getFullYear()} Kaching App — Version 1.0</span>
         <span className="block">Develop by: JP QUINTANA</span>
