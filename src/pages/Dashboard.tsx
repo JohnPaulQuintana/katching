@@ -19,6 +19,7 @@ import {
   faRightFromBracket,
   faChartPie,
   faReceipt,
+  faPiggyBank,
 } from "@fortawesome/free-solid-svg-icons";
 import { motion, AnimatePresence } from "framer-motion";
 
@@ -586,6 +587,18 @@ const Dashboard = () => {
         >
           <FontAwesomeIcon icon={faReceipt} className="text-xl" />
           <span className="text-xs">Records</span>
+        </button>
+
+        <button
+          onClick={() => navigate("/esaves")}
+          className={`flex flex-col items-center gap-0.5 transition transform hover:scale-105 ${
+            location.pathname === "/esaves"
+              ? "text-indigo-600 font-semibold"
+              : "text-gray-500 hover:text-indigo-500"
+          }`}
+        >
+          <FontAwesomeIcon icon={faPiggyBank} className="text-xl" />
+          <span className="text-xs">Savings</span>
         </button>
         {/* 
   <button
